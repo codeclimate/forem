@@ -63,7 +63,6 @@ export class ProfileForm extends Component {
       const { next } = this.props;
       next();
     } catch (error) {
-      Honeybadger.notify(error.statusText);
       let errorMessage = 'Unable to continue, please try again.';
       if (error.status === 422) {
         // parse validation error messages from UsersController#onboarding

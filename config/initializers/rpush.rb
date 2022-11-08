@@ -73,9 +73,6 @@ Rpush.reflect do |on|
       Device.ios.where(token: notification.device_token).destroy_all
     end
 
-    Honeybadger.notify(error_message:
-      "error_description: #{notification.error_description}, error_code: #{notification.error_code}")
-
     ForemStatsClient.increment(
       "push_notifications.errors",
       tags: [

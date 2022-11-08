@@ -73,15 +73,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       user_errors = @user.errors.full_messages
 
-      Honeybadger.context({
-                            username: @user.username,
-                            user_id: @user.id,
-                            auth_data: request.env["omniauth.auth"],
-                            auth_error: request.env["omniauth.error"].inspect,
-                            user_errors: user_errors
-                          })
-      Honeybadger.notify("Omniauth log in error")
-
       flash[:alert] = user_errors
       redirect_to new_user_registration_url
     end
@@ -89,7 +80,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     flash[:global_notice] = e.message
     redirect_to root_path
   rescue StandardError => e
-    Honeybadger.notify(e)
 
     flash[:alert] = I18n.t("omniauth_callbacks_controller.log_in_error", e: e)
     redirect_to new_user_registration_url

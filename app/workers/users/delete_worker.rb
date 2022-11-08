@@ -20,8 +20,6 @@ module Users
       NotifyMailer.with(name: user.name, email: user.email).account_deleted_email.deliver_now
     rescue StandardError => e
       ForemStatsClient.count("users.delete", 1, tags: ["action:failed", "user_id:#{user.id}"])
-      Honeybadger.context({ user_id: user.id })
-      Honeybadger.notify(e)
     end
   end
 end

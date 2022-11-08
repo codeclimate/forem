@@ -25,7 +25,6 @@ export const SidebarWidget = () => {
       })
       .catch((error) => {
         setSuggestedUsers([]);
-        Honeybadger.notify(error);
       });
   }, []);
 

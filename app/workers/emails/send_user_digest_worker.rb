@@ -11,12 +11,7 @@ module Emails
       articles = EmailDigestArticleCollector.new(user).articles_to_send
       return unless articles.any?
 
-      begin
-        DigestMailer.with(user: user, articles: articles.to_a).digest_email.deliver_now
-      rescue StandardError => e
-        Honeybadger.context({ user_id: user.id, article_ids: articles.map(&:id) })
-        Honeybadger.notify(e)
-      end
+      DigestMailer.with(user: user, articles: articles.to_a).digest_email.deliver_now
     end
   end
 end

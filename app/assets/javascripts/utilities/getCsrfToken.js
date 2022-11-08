@@ -19,10 +19,6 @@ function getCsrfToken() {
 
       if (i === MAX_RETRIES) {
         clearInterval(waitingOnCSRF);
-        Honeybadger.notify(
-          'Could not locate CSRF metatag ' +
-            JSON.stringify(localStorage.current_user),
-        );
         return reject(new Error('Could not locate CSRF meta tag on the page.'));
       }
     }, RETRY_INTERVAL);

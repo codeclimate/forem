@@ -714,19 +714,6 @@ var instantClick
     InstantClick.init();
   }
 
-// INITIALIZE/ERROR HANDLING
-
-  Honeybadger.configure({
-    apiKey: document.body.dataset.honeybadgerKey,
-    environment: "<%= Rails.env %>",
-    revision: document.body.dataset.releaseFootprint,
-  });
-
-  Honeybadger.beforeNotify(function(notice) {
-    const ignorePatterns = [/ResizeObserver/i, /MetaMask/i, /MtPopUpList/i, /ChunkLoadError/i]
-    return !(ignorePatterns.some((pattern) => pattern.test(notice.message)));
-  });
-
 // INITIALIZE AHOY TRACKING
 // Setting cookies to false matches what we do in ahoy's initializer.
 // Setting trackVisits to false prevents ahoy from creating a visit on the server-side.

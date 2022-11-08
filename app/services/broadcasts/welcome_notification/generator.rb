@@ -15,8 +15,6 @@ module Broadcasts
 
         notification_methods.each do |method|
           send method unless notification_enqueued # rubocop:disable Style/Send
-        rescue ActiveRecord::RecordNotFound => e
-          Honeybadger.notify(e)
         end
       end
 

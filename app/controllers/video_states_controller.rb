@@ -8,11 +8,7 @@ class VideoStatesController < ApplicationController
       render json: { message: "invalid_key" }, status: :unprocessable_entity
       return
     end
-    begin
-      request_json = JSON.parse(request.raw_post, symbolize_names: true)
-    rescue StandardError => e
-      Honeybadger.notify(e)
-    end
+    request_json = JSON.parse(request.raw_post, symbolize_names: true)
     message_json = JSON.parse(request_json[:Message], symbolize_names: true)
     @article = Article.find_by(video_code: message_json[:input][:key])
 
