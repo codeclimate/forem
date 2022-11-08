@@ -68,6 +68,17 @@ RSpec.describe "Stories::TaggedArticlesIndex", type: :request do
           expect(response).to be_successful
         end
 
+        it "returns not found if no published posts and tag not supported" do
+          Article.destroy_all
+          tag.update_column(:supported, false)
+          expect { get "/t/#{tag.name}" }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+
+        it "renders not found if there are approved but scheduled posts" do
+          create(:article, published: true, approved: true, tags: unsupported_tag, published_at: 1.hour.from_now)
+          expect { get "/t/#{unsupported_tag.name}" }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+
         it "renders normal page if no articles but tag is supported" do
           Article.destroy_all
           expect { get "/t/#{tag.name}" }.not_to raise_error
@@ -117,14 +128,6 @@ RSpec.describe "Stories::TaggedArticlesIndex", type: :request do
             has_mod_action_button
             does_not_paginate
             sets_remember_token
-          end
-
-          it "creates tag if it does not exist", :aggregate_failures do
-            expect {
-              get "/t/newTagName"
-            }.to change(Tag, :count).by(1)
-
-            expect(response.body).to include("crayons-navigation__item crayons-navigation__item--current")
           end
 
           def has_mod_action_button
