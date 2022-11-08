@@ -24,8 +24,6 @@ module Organizations
     rescue StandardError => e
       ForemStatsClient.count("organizations.delete", 1,
                              tags: ["action:failed", "organization_id:#{org.id}", "user_id:#{user.id}"])
-      Honeybadger.context({ organization_id: org.id, user_id: user.id })
-      Honeybadger.notify(e)
     end
 
     def audit_log(org, user)

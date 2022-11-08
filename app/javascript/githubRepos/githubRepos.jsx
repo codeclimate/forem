@@ -22,7 +22,6 @@ export const GithubRepos = () => {
         throw new Error(response.statusText);
       }
     } catch (error) {
-      Honeybadger.notify(error);
       setError(true);
       setErrorMessage(error.toString());
     }

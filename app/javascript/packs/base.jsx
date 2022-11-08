@@ -99,26 +99,17 @@ waitOnBaseData()
       });
     }
   })
-  .catch((error) => {
-    Honeybadger.notify(error);
-  });
 
 initializeNav();
 
 async function loadCreatorSettings() {
-  try {
-    const [{ LogoUploadController }, { Application }] = await Promise.all([
-      import('@admin/controllers/logo_upload_controller'),
-      import('@hotwired/stimulus'),
-    ]);
+  const [{ LogoUploadController }, { Application }] = await Promise.all([
+    import('@admin/controllers/logo_upload_controller'),
+    import('@hotwired/stimulus'),
+  ]);
 
-    const application = Application.start();
-    application.register('logo-upload', LogoUploadController);
-  } catch (error) {
-    Honeybadger.notify(
-      `Error loading the creator settings controller: ${error.message}`,
-    );
-  }
+  const application = Application.start();
+  application.register('logo-upload', LogoUploadController);
 }
 
 if (document.location.pathname === '/admin/creator_settings/new') {

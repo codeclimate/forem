@@ -10,7 +10,6 @@ module Moderator
       Moderator::BanishUser.call(admin: admin, user: abuser)
     rescue StandardError => e
       ForemStatsClient.count("moderators.banishuser", 1, tags: ["action:failed", "user_id:#{abuser.id}"])
-      Honeybadger.notify(e)
     end
   end
 end

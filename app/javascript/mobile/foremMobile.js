@@ -37,8 +37,6 @@ export function foremMobileNamespace() {
           }
         })
         .catch((error) => {
-          Honeybadger.notify(error);
-
           // Increase backoff delay time
           if (window.ForemMobile.retryDelayMs < 20000) {
             window.ForemMobile.retryDelayMs =
@@ -63,14 +61,10 @@ export function foremMobileNamespace() {
       document.dispatchEvent(event);
     },
     injectNativeMessage(namespace, message) {
-      try {
-        if (isNativeIOS(namespace)) {
-          window.webkit.messageHandlers[namespace].postMessage(message);
-        } else if (isNativeAndroid(`${namespace}Message`)) {
-          AndroidBridge[`${namespace}Message`](JSON.stringify(message));
-        }
-      } catch (error) {
-        Honeybadger.notify(error);
+      if (isNativeIOS(namespace)) {
+        window.webkit.messageHandlers[namespace].postMessage(message);
+      } else if (isNativeAndroid(`${namespace}Message`)) {
+        AndroidBridge[`${namespace}Message`](JSON.stringify(message));
       }
     },
     userSessionBroadcast() {

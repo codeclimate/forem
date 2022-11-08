@@ -11,7 +11,6 @@ module Moderator
       Article.published.where(user: user).each(&:update_score)
     rescue StandardError => e
       ForemStatsClient.count("moderators.sink", 1, tags: ["action:failed", "user_id:#{user.id}"])
-      Honeybadger.notify(e)
     end
   end
 end

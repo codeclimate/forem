@@ -21,7 +21,4 @@ waitOnBaseData()
     });
 
     loadElement();
-  })
-  .catch((error) => {
-    Honeybadger.notify(error);
   });

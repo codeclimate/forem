@@ -245,6 +245,5 @@ describe('<GithubRepos />', () => {
     const errorAlert = await findByRole('alert');
 
     expect(errorAlert.textContent).toEqual('An error occurred: some error');
-    expect(Honeybadger.notify).toHaveBeenCalledTimes(1);
   });
 });

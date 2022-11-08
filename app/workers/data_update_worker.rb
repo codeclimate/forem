@@ -29,8 +29,6 @@ class DataUpdateWorker
   rescue StandardError => e
     script.mark_as_failed!(e)
     log_status(script)
-
-    Honeybadger.notify(e, context: { script_id: script.id })
   end
 
   def log_status(script)

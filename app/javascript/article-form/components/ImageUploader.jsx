@@ -205,7 +205,6 @@ const V1EditorImageUpload = ({
           message: error,
           addCloseButton: true,
         });
-        Honeybadger.notify(error);
       });
   };
   return (

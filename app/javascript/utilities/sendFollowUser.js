@@ -18,8 +18,5 @@ export function sendFollowUser(user, successCb) {
     .then((json) => {
       successCb(json.outcome);
       // json is followed or unfollowed
-    })
-    .catch((error) => {
-      Honeybadger.notify(error);
     });
 }
