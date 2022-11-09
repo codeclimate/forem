@@ -17,7 +17,7 @@ RSpec.describe Tag, type: :model do
       it { is_expected.to validate_length_of(:name).is_at_most(30) }
       it { is_expected.to validate_presence_of(:category) }
 
-      it { is_expected.not_to allow_value("#Hello", "c++", "AWS_Lambda").for(:name) }
+      it { is_expected.not_to allow_value("#Hello", "c++", "AWS-Lambda").for(:name) }
 
       # rubocop:disable RSpec/NamedSubject
       it do
@@ -87,10 +87,6 @@ RSpec.describe Tag, type: :model do
         # ™ is not :alnum:
         tag.name = "Test™"
         expect(tag).not_to be_valid
-
-        # - is valid
-        tag.name = "tag-with-dash"
-        expect(tag).to be_valid
       end
     end
 
